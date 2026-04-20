@@ -132,7 +132,7 @@
                             <div class="form-group">
                                 <label>Photo Product</label>
                                 <div class="col-sm-6">
-                                    <input type="file" class="form-control" name="image"
+                                    <input type="file" class="form-control" name="image" id="image" accept="image/jpeg,image/jpg,image/png"
                                         @error('image') is-invalid @enderror>
                                 </div>
                                 @error('image')
@@ -153,4 +153,17 @@
 @endsection
 
 @push('scripts')
+    <script>
+        const uploadField = document.getElementById("image");
+
+        uploadField.onchange = function() {
+            // 1 MB limit (1 * 1024 * 1024 bytes)
+            const maxSize = 1097152;
+
+            if(this.files[0].size > maxSize) {
+                alert("File is too large! Please select a file under 1 MB.");
+            this.value = ""; // Clear the input
+            };
+        };
+    </script>
 @endpush
