@@ -23,7 +23,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('pages.products.create');
+        $categories = DB::table('categories')->get();
+        return view('pages.products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -34,7 +35,8 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'std_stock' => 'required|integer',
             'stock' => 'required|integer',
-            'category' => 'required',
+            // 'category' => 'required',
+            'category_id' => 'required',
             'image' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
@@ -42,13 +44,16 @@ class ProductController extends Controller
         $request->image->storeAs('public/products', $filename);
         $data = $request->all();
 
+        $category = DB::table('categories')->where('id', $request->category_id)->first();
+
         $product = new \App\Models\Product;
         $product->name = $request->name;
         $product->cost_price = (int) $request->cost_price;
         $product->price = (int) $request->price;
         $product->std_stock = (int) $request->std_stock;
         $product->stock = (int) $request->stock;
-        $product->category = $request->category;
+        $product->category = $category->name;
+        $product->category_id = $request->category_id;
         $product->image = $filename;
         $product->save();
 
@@ -58,7 +63,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = \App\Models\Product::findOrFail($id);
-        return view('pages.products.edit', compact('product'));
+        $categories = DB::table('categories')->get();
+        return view('pages.products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -72,7 +78,8 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'std_stock' => 'required|integer',
             'stock' => 'required|integer',
-            'category' => 'required',
+            // 'category' => 'required',
+            'category_id' => 'required',
             // 'image' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
@@ -81,18 +88,7 @@ class ProductController extends Controller
             $request->image->storeAs('public/products', $filename);
             $data = $request->all();
 
-            // $product = new \App\Models\Product;
-            $product = \App\Models\Product::findOrFail($id);
-            $product->name = $request->name;
-            $product->cost_price = (int) $request->cost_price;
-            $product->price = (int) $request->price;
-            $product->std_stock = (int) $request->std_stock;
-            $product->stock = (int) $request->stock;
-            $product->category = $request->category;
-            $product->image = $filename;
-            $product->update();
-        } else {
-            $data = $request->all();
+            $category = DB::table('categories')->where('id', $request->category_id)->first();
 
             // $product = new \App\Models\Product;
             $product = \App\Models\Product::findOrFail($id);
@@ -101,7 +97,24 @@ class ProductController extends Controller
             $product->price = (int) $request->price;
             $product->std_stock = (int) $request->std_stock;
             $product->stock = (int) $request->stock;
-            $product->category = $request->category;
+            $product->category = $category->name;
+            $product->category_id = $request->category_id;
+            $product->image = $filename;
+            $product->update();
+        } else {
+            $data = $request->all();
+
+            $category = DB::table('categories')->where('id', $request->category_id)->first();
+
+            // $product = new \App\Models\Product;
+            $product = \App\Models\Product::findOrFail($id);
+            $product->name = $request->name;
+            $product->cost_price = (int) $request->cost_price;
+            $product->price = (int) $request->price;
+            $product->std_stock = (int) $request->std_stock;
+            $product->stock = (int) $request->stock;
+            $product->category = $category->name;
+            $product->category_id = $request->category_id;
             $product->update();
             }
 

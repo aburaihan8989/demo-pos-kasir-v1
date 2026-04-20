@@ -89,14 +89,14 @@
                                                     {{ $product->name }}
                                                 </td>
                                                 <td>
-                                                    {{-- {{ $product->category }} --}}
-                                                    @if ($product->category == 'minuman')
+                                                    {{ $product->category }}
+                                                    {{-- @if ($product->category == 'minuman')
                                                         Minuman
                                                     @elseif ($product->category == 'makanan')
                                                         Makanan
                                                     @elseif ($product->category == 'other')
                                                         Other
-                                                    @endif
+                                                    @endif --}}
                                                 </td>
                                                 <td>
                                                     Rp. {{ number_format(($product->cost_price), 0, ",", ".") }}

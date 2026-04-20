@@ -102,7 +102,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Category</label>
-                                <div class="selectgroup w-100">
+                                <select class="form-control selectric" name="category_id">
+                                    <option value="">Select Category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                {{-- <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
                                         <input type="radio" name="category" value="minuman" class="selectgroup-input"
                                             @if ($product->category == 'minuman') checked @endif>
@@ -118,7 +127,7 @@
                                             @if ($product->category == 'other') checked @endif>
                                         <span class="selectgroup-button">Other</span>
                                     </label>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="form-group">
                                 <label>Photo Product</label>

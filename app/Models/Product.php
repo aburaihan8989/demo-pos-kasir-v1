@@ -18,7 +18,14 @@ class Product extends Model
         'std_stock',
         'stock',
         'category',
+        'category_id',
         'image',
         'is_best_seller'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }

@@ -26,4 +26,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('order', \App\Http\Controllers\OrderController::class);
     Route::resource('stock', \App\Http\Controllers\StockController::class);
     Route::get('order-product', 'App\Http\Controllers\OrderController@view')->name('order-product');
+    Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 });
