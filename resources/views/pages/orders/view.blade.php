@@ -98,7 +98,7 @@
                                                     {{ $item->quantity }}
                                                 </td>
                                                 <td>
-                                                    Rp. {{ number_format(($item->quantity * $item->total_price), 0, ",", ".") }}
+                                                    Rp. {{ number_format(($item->quantity * $item->product->price), 0, ",", ".") }}
                                                 </td>
                                             </tr>
                                             <?php $no++; ?>
